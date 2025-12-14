@@ -19,8 +19,8 @@ const app = express();
 // ------------------ MIDDLEWARE ------------------
 // Allow frontend to access backend (adjust port if needed)
 app.use(cors({
-  origin: "http://localhost:5173", // Vite frontend URL
-  credentials: true,
+  origin: true,
+  credentials: true
 }));
 
 // Parse JSON bodies
