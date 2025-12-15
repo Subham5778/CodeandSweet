@@ -1,15 +1,23 @@
 // frontend/src/components/ProductCard.jsx
 import React from "react";
 
-export default function ProductCard({ product, quantity, onIncrease, onDecrease, onAddToCart }) {
-  if (!product) return null; // safeguard
+const API_URL = import.meta.env.VITE_API_URL;
+
+export default function ProductCard({
+  product,
+  quantity,
+  onIncrease,
+  onDecrease,
+  onAddToCart,
+}) {
+  if (!product) return null;
 
   return (
     <div className="bg-white rounded shadow p-4 flex flex-col items-center">
       {/* Image */}
       {product.image && (
         <img
-          src={product.image}
+          src={`${API_URL}/uploads/${product.image}`}
           alt={product.name}
           className="h-32 w-32 object-cover mb-2"
         />
