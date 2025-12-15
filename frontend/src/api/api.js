@@ -1,6 +1,8 @@
 // api.js - helper to make API requests with JWT token
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://codeandsweet.onrender.com";
+// api.js
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://codeandsweet.onrender.com/api";
+
 
 export async function apiRequest(endpoint, options = {}) {
   const token = localStorage.getItem("token"); // JWT from localStorage
