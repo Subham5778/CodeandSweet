@@ -55,7 +55,7 @@ router.post(
         category,
         price: Number(price),
         stock: Number(stock),
-        image: req.file ? /uploads/${req.file.filename} : "",
+        image: req.file ? req.file.filename : "",
       });
 
       await sweet.save();
@@ -87,7 +87,7 @@ router.put(
       if (stock) sweet.stock = Number(stock);
 
       if (req.file) {
-      sweet.image = /uploads/${req.file.filename};
+       sweet.image = req.file.filename;
       }
 
       await sweet.save();
