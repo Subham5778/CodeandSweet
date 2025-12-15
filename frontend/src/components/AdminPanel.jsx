@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { apiRequest } from "../api/api";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL || "https://codeandsweet.onrender.com";
 
 export default function AdminPanel({ sweets = [], fetchSweets }) {
   const [newSweet, setNewSweet] = useState({
