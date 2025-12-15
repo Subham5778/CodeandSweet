@@ -13,7 +13,7 @@ const app = express();
 // ------------------ MIDDLEWARE ------------------
 // Enable CORS for frontend (adjust port if different)
 app.use(cors({
-  origin: "http://localhost:5173", // Vite dev server URL
+  origin: true, 
   credentials: true,
 }));
 
