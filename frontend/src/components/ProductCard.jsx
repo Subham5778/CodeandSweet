@@ -1,30 +1,45 @@
-// frontend/src/components/ProductCard.jsx
 import React from "react";
 
-const API_URL = import.meta.env.VITE_API_URL;
+// Backend base URL (same as AdminPanel)
+const BACKEND_URL = "https://codeandsweet.onrender.com";
 
 export default function ProductCard({
   product,
-  quantity,
+  quantity = 0,
   onIncrease,
   onDecrease,
   onAddToCart,
 }) {
   if (!product) return null;
 
+  // Build correct image URL
+  const imageUrl =
+    product.image && typeof product.image === "string"
+      ? ${BACKEND_URL}/uploads/${product.image}
+      : null;
+
   return (
     <div className="bg-white rounded shadow p-4 flex flex-col items-center">
-      {/* Image */}
-      {product.image && (
+      {/* Product Image */}
+      {imageUrl ? (
         <img
-          src={`${API_URL}/uploads/${product.image}`}
+          src={imageUrl}
           alt={product.name}
-          className="h-32 w-32 object-cover mb-2"
+          className="h-32 w-32 object-cover mb-2 rounded"
+          onError={(e) => {
+            e.target.src = "/placeholder.png"; // optional fallback
+          }}
         />
+      ) : (
+        <div className="h-32 w-32 bg-gray-200 flex items-center justify-center mb-2 rounded text-sm text-gray-500">
+          No Image
+        </div>
       )}
 
-      {/* Name and Category */}
-      <h3 className="font-semibold">{product.name}</h3>
+      {/* Product Name */}
+      <h3 className="font-semibold text-center">{product.name}</h3>
+
+      {/* Category */}
       <p className="text-sm text-gray-600">{product.category}</p>
 
       {/* Price */}
@@ -34,14 +49,16 @@ export default function ProductCard({
       <div className="flex items-center mt-2 space-x-2">
         <button
           onClick={onDecrease}
-          className="px-2 py-1 bg-gray-200 rounded"
+          className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
         >
-          -
+          −
         </button>
-        <span>{quantity || 0}</span>
+
+        <span className="min-w-[20px] text-center">{quantity}</span>
+
         <button
           onClick={onIncrease}
-          className="px-2 py-1 bg-gray-200 rounded"
+          className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
         >
           +
         </button>
@@ -50,7 +67,7 @@ export default function ProductCard({
       {/* Add to Cart */}
       <button
         onClick={onAddToCart}
-        className="mt-2 px-4 py-1 bg-pink-500 text-white rounded"
+        className="mt-3 px-4 py-1 bg-pink-500 hover:bg-pink-600 text-white rounded"
       >
         Add to Cart
       </button>
