@@ -4,7 +4,7 @@ import Stats from "../components/Stats";
 import SearchFilter from "../components/SearchFilter";
 import AdminPanel from "../components/AdminPanel";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL || "https://codeandsweet.onrender.com";
 
 export default function Home({
   sweets = [],
