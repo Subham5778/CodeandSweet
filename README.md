@@ -1,12 +1,8 @@
 🍰 CodeandSweet – Full Stack E-commerce Application
 
-CodeandSweet is a full-stack e-commerce web application built using the MERN stack. The project allows users to browse sweets, add items to a cart, register/login, and place orders. It also includes an Admin Panel for managing products.
-
-
----
+CodeandSweet is a full-stack e-commerce web application built using the MERN stack. The application allows users to browse sweets, add items to a cart, register/login, and place orders. It also includes an Admin Panel for managing products.
 
 🚀 Tech Stack
-
 Frontend
 
 React.js (Vite)
@@ -16,7 +12,6 @@ Tailwind CSS
 React Hooks & Components
 
 Axios / Fetch API
-
 
 Backend
 
@@ -30,12 +25,15 @@ JWT Authentication
 
 bcrypt.js for password hashing
 
+Cloudinary (Image Storage)
 
+🌐 Live Links
 
----
+Frontend: https://codeand-sweet.vercel.app/
+
+Backend API: https://codeandsweet.onrender.com/api
 
 📂 Project Structure
-
 CodeandSweet/
 │
 ├── backend/
@@ -63,18 +61,14 @@ CodeandSweet/
 │
 └── README.md
 
-
----
-
 ✨ Features
-
 User Features
 
 User Registration & Login
 
 View sweets/products
 
-Add to cart
+Add products to cart
 
 Increase / decrease quantity
 
@@ -82,55 +76,28 @@ Remove items from cart
 
 Responsive UI
 
-
 Admin Features
 
-Admin panel
+Admin Panel
 
 Add / update / delete products
 
-Manage product images
-
-
-
----
-
-🔐 Environment Variables
-
-Backend (backend/.env)
-
-PORT=5000
-MONGO_URI=your_mongodb_atlas_uri
-JWT_SECRET=your_secret_key
-
-Frontend (frontend/.env)
-
-VITE_API_BASE_URL=https://your-backend-url/api
-
-
----
+Upload and manage product images using Cloudinary
 
 🛠 Installation & Setup
-
 1️⃣ Clone the repository
-
 git clone https://github.com/your-username/CodeandSweet.git
 cd CodeandSweet
 
 2️⃣ Backend Setup
-
 cd backend
 npm install
 npm run dev
 
 3️⃣ Frontend Setup
-
 cd frontend
 npm install
 npm run dev
-
-
----
 
 🌍 Deployment
 
@@ -140,26 +107,22 @@ Backend: Render
 
 Database: MongoDB Atlas
 
-
-Make sure environment variables are added in Vercel Dashboard for both frontend and backend.
-
-
----
-
 📸 Screenshots
 
-Add screenshots of Home Page, Cart Page, Login/Register, and Admin Panel here.
+Add screenshots of:
 
+Home Page
 
----
+Cart Page
+
+Login / Register
+
+Admin Panel
 
 🧑‍💻 Author
 
 Subham Kumar
 B.Tech CSE | Full Stack Developer
-
-
----
 
 ⭐ Support
 
