@@ -1,6 +1,6 @@
 import Sweet from "../models/Sweet.js";
 
-// Add Sweet (Upload Image to Cloudinary)
+// Add Sweet
 export const addSweet = async (req, res) => {
   try {
     const sweet = new Sweet({
