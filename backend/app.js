@@ -1,7 +1,5 @@
 import express from "express";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
 
 // Import routes
 import authRoutes from "./routes/auth.js";
@@ -10,33 +8,39 @@ import cartRoutes from "./routes/cart.js";
 
 const app = express();
 
-// ------------------ MIDDLEWARE ------------------
-// Enable CORS for frontend (adjust port if different)
-app.use(cors({
-  origin: true, 
-  credentials: true,
-}));
+/* ------------------ MIDDLEWARE ------------------ */
 
-// Parse JSON and URL-encoded data
+// Enable CORS (allow frontend connection)
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
+// Parse JSON data
 app.use(express.json());
+
+// Parse URL encoded data
 app.use(express.urlencoded({ extended: true }));
 
-// ------------------ STATIC FILES ------------------
-// __dirname replacement in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+/* ------------------ ROUTES ------------------ */
 
-// Serve images from uploads folder
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-// ------------------ ROUTES ------------------
+// Authentication routes
 app.use("/api/auth", authRoutes);
+
+// Sweets routes
 app.use("/api/sweets", sweetRoutes);
+
+// Cart routes
 app.use("/api/cart", cartRoutes);
 
-// ------------------ HEALTH CHECK ------------------
+/* ------------------ HEALTH CHECK ------------------ */
+
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
+
+/* ------------------ EXPORT APP ------------------ */
 
 export default app;
