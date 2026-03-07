@@ -1,30 +1,13 @@
 import express from "express";
 import Sweet from "../models/Sweet.js";
 import { authenticateToken, isAdmin } from "../middleware/auth.js";
-import multer from "multer";
-import path from "path";
-import fs from "fs";
+import { upload } from "../middleware/upload.js";
 
 const router = express.Router();
 
-/* ------------------ MULTER SETUP ------------------ */
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    
-  cb(null, "uploads");
-},
-  
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  },
-});
-
-const upload = multer({ storage });
-
 /* ------------------ PUBLIC ROUTES ------------------ */
 
-// ✅ Get all sweets (PUBLIC)
+// Get all sweets
 router.get("/", async (req, res) => {
   try {
     const sweets = await Sweet.find();
@@ -36,7 +19,7 @@ router.get("/", async (req, res) => {
 
 /* ------------------ ADMIN ROUTES ------------------ */
 
-// ✅ Add new sweet (ADMIN)
+// Add new sweet
 router.post(
   "/",
   authenticateToken,
@@ -55,10 +38,11 @@ router.post(
         category,
         price: Number(price),
         stock: Number(stock),
-        image: req.file ? req.file.filename : "",
+        image: req.file ? req.file.path : ""
       });
 
       await sweet.save();
+
       res.status(201).json(sweet);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -66,7 +50,7 @@ router.post(
   }
 );
 
-// ✅ Update sweet (ADMIN)
+// Update sweet
 router.put(
   "/:id",
   authenticateToken,
@@ -75,6 +59,7 @@ router.put(
   async (req, res) => {
     try {
       const sweet = await Sweet.findById(req.params.id);
+
       if (!sweet) {
         return res.status(404).json({ message: "Sweet not found" });
       }
@@ -87,10 +72,11 @@ router.put(
       if (stock) sweet.stock = Number(stock);
 
       if (req.file) {
-       sweet.image = req.file.filename;
+        sweet.image = req.file.path;
       }
 
       await sweet.save();
+
       res.status(200).json(sweet);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -98,33 +84,38 @@ router.put(
   }
 );
 
-// ✅ Delete sweet (ADMIN)
+// Delete sweet
 router.delete("/:id", authenticateToken, isAdmin, async (req, res) => {
   try {
     const sweet = await Sweet.findByIdAndDelete(req.params.id);
+
     if (!sweet) {
       return res.status(404).json({ message: "Sweet not found" });
     }
+
     res.json({ message: "Sweet deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// ✅ Restock sweet (ADMIN)
+// Restock sweet
 router.post("/:id/restock", authenticateToken, isAdmin, async (req, res) => {
   try {
     const { quantity } = req.body;
+
     if (!quantity || quantity <= 0) {
       return res.status(400).json({ message: "Invalid quantity" });
     }
 
     const sweet = await Sweet.findById(req.params.id);
+
     if (!sweet) {
       return res.status(404).json({ message: "Sweet not found" });
     }
 
     sweet.stock += Number(quantity);
+
     await sweet.save();
 
     res.json(sweet);
@@ -133,10 +124,11 @@ router.post("/:id/restock", authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// ✅ Purchase sweet (USER)
+// Purchase sweet
 router.post("/:id/purchase", authenticateToken, async (req, res) => {
   try {
     const sweet = await Sweet.findById(req.params.id);
+
     if (!sweet) {
       return res.status(404).json({ message: "Sweet not found" });
     }
@@ -146,6 +138,7 @@ router.post("/:id/purchase", authenticateToken, async (req, res) => {
     }
 
     sweet.stock -= 1;
+
     await sweet.save();
 
     res.json(sweet);
