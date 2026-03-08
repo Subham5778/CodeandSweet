@@ -38,7 +38,7 @@ router.post(
         category,
         price: Number(price),
         stock: Number(stock),
-        image: req.file ? req.file.path : ""
+        image: req.file?.path 
       });
 
       await sweet.save();
