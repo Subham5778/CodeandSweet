@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { apiRequest } from "../api/api";
 
-const API_URL = import.meta.env.VITE_API_URL || "https://codeandsweet.onrender.com";
+
 
 export default function AdminPanel({ sweets = [], fetchSweets }) {
   const [newSweet, setNewSweet] = useState({
@@ -92,10 +92,10 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
   const previewImage = (img) => {
     if (!img) return null;
     return typeof img === "string" ? (
-      <img src={`${API_URL}/uploads/${img}`} alt="sweet" className="h-16 w-16 object-cover rounded" />
-    ) : (
-      <img src={URL.createObjectURL(img)} alt="sweet" className="h-16 w-16 object-cover rounded" />
-    );
+  <img src={img} alt="sweet" className="h-16 w-16 object-cover rounded" />
+  ) : (
+  <img src={URL.createObjectURL(img)} alt="sweet" className="h-16 w-16 object-cover rounded" />
+  );
   };
 
   return (
