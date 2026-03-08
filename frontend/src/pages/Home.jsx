@@ -54,7 +54,7 @@ export default function Home({
               key={sweet._id}
               product={{
                 ...sweet,
-                image: sweet.image ? `${API_URL}/uploads/${sweet.image}` : null
+                image: sweet.image 
               }}
               quantity={qty[sweet._id] || 0}
               onIncrease={() => increaseQty(sweet._id)}
