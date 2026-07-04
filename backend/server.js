@@ -1,34 +1,10 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
 import dotenv from "dotenv";
-
-import authRoutes from "./routes/auth.js";
-import sweetRoutes from "./routes/sweets.js";
+import mongoose from "mongoose";
+import app from "./app.js";
 
 dotenv.config();
 
-const app = express();
-
-// ------------------ MIDDLEWARE ------------------
-
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
-
-app.use(express.json());
-
-// ------------------ ROUTES ------------------
-
-app.use("/api/auth", authRoutes);
-app.use("/api/sweets", sweetRoutes);
-
-// Health check
-app.get("/", (req, res) => res.send("Backend is running 🚀"));
-
 // ------------------ MONGODB CONNECTION ------------------
-
 if (!process.env.MONGO_URL) {
   console.error("Error: MONGO_URL is not defined in .env");
   process.exit(1);
@@ -44,12 +20,8 @@ const connectDB = async () => {
   }
 };
 
-// ------------------ START SERVER ------------------
-
+// Connect to MongoDB and start server
 const PORT = process.env.PORT || 5000;
-
 connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

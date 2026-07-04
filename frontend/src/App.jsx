@@ -31,7 +31,7 @@ export default function App() {
   /* ------------------ FETCH SWEETS ------------------ */
   const fetchSweets = async () => {
     try {
-      const data = await apiRequest("/sweets");
+      const data = await apiRequest("/api/sweets"); 
       setSweets(data);
     } catch (err) {
       console.error("Failed to fetch sweets:", err);
@@ -85,7 +85,7 @@ export default function App() {
   /* ------------------ USER AUTH ------------------ */
   const handleLogin = async () => {
     try {
-      const data = await apiRequest("/auth/login", {
+      const data = await apiRequest("/api/auth/login", {
         method: "POST",
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),
       });
@@ -99,7 +99,7 @@ export default function App() {
 
   const handleRegister = async () => {
     try {
-      const data = await apiRequest("/auth/register", {
+      const data = await apiRequest("/api/auth/register", {
         method: "POST",
         body: JSON.stringify({
           name: registerName,
