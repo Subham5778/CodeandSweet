@@ -131,7 +131,6 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
 
     if (typeof img === "string") {
       const src = img.startsWith("http") ? img : `${BACKEND_URL}/uploads/${img}`;
-<<<<<<< HEAD
       return (
         <img
           src={src}
@@ -155,12 +154,6 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
       }
     }
     return null;
-=======
-      return <img src={src} alt="sweet" className="h-10 w-10 object-cover rounded-lg border border-white/10" />;
-    }
-
-    return <img src={URL.createObjectURL(img)} alt="sweet" className="h-10 w-10 object-cover rounded-lg border border-white/10" />;
->>>>>>> d9f7208 (Redesign the webpage)
   };
 
   // Calculate sales insights

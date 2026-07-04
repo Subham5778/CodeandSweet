@@ -37,7 +37,7 @@ export default function Header({
   return (
     <>
       {/* HEADER BAR */}
-      <nav className="sticky top-0 z-40 glass backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-white/5">
+      <nav className="sticky top-0 z-45 glass backdrop-blur-md px-3 sm:px-6 py-3 sm:py-4 flex flex-col md:flex-row justify-between items-center border-b border-white/5 gap-3">
         <div 
           className="flex items-center gap-3 cursor-pointer"
           onClick={() => {
@@ -45,14 +45,14 @@ export default function Header({
             setShowCart(false);
           }}
         >
-          <img src={logo} alt="Logo" className="w-12 h-12 object-contain hover:scale-105 transition" />
-          <div>
-            <h1 className="text-xl font-bold gold-text-gradient font-serif tracking-wide leading-none">Cacao & Confection</h1>
-            <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-mono">Bespoke Sweet Engineering</span>
+          <img src={logo} alt="Logo" className="w-10 h-10 sm:w-12 sm:h-12 object-contain hover:scale-105 transition" />
+          <div className="text-left">
+            <h1 className="text-lg sm:text-xl font-bold gold-text-gradient font-serif tracking-wide leading-none">Cacao & Confection</h1>
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-500 font-mono">Bespoke Sweet Engineering</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 w-full md:w-auto justify-center sm:justify-end">
           {/* Order history shortcut for logged in users */}
           {user && (
             <button
@@ -60,25 +60,25 @@ export default function Header({
                 setActiveView(activeView === "orders" ? "home" : "orders");
                 setShowCart(false);
               }}
-              className={`text-sm font-medium hover:text-amber-400 transition cursor-pointer px-3 py-1.5 rounded-lg border ${
+              className={`text-xs sm:text-sm font-medium hover:text-amber-400 transition cursor-pointer px-2.5 py-1.5 rounded-lg border ${
                 activeView === "orders" 
                   ? "border-amber-500/50 bg-amber-500/10 text-amber-300" 
                   : "border-white/5 text-neutral-300"
               }`}
             >
-              📜 Order Ledger
+              📜 Orders
             </button>
           )}
 
           {/* CART BUTTON */}
           <button
             onClick={() => setShowCart(true)}
-            className="relative px-4 py-2 bg-neutral-900/60 hover:bg-neutral-900 border border-white/10 rounded-xl flex items-center gap-2 hover:border-amber-500/50 transition duration-300 text-sm font-medium cursor-pointer"
+            className="relative px-3 sm:px-4 py-1.5 sm:py-2 bg-neutral-900/60 hover:bg-neutral-900 border border-white/10 rounded-xl flex items-center gap-1.5 sm:gap-2 hover:border-amber-500/50 transition duration-300 text-xs sm:text-sm font-medium cursor-pointer"
           >
             <span>🛒</span>
             <span className="text-neutral-300">Cart</span>
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 w-5 h-5 gold-gradient text-neutral-950 font-bold text-xs rounded-full flex items-center justify-center animate-bounce">
+              <span className="absolute -top-1.5 -right-1.5 w-4.5 h-4.5 sm:w-5 sm:h-5 gold-gradient text-neutral-950 font-bold text-[10px] sm:text-xs rounded-full flex items-center justify-center animate-bounce">
                 {cartCount}
               </span>
             )}
@@ -86,16 +86,16 @@ export default function Header({
 
           {/* AUTHENTICATION / PROFILE BUTTONS */}
           {!user ? (
-            <div className="flex gap-2">
+            <div className="flex gap-1.5 sm:gap-2">
               <button
                 onClick={() => setShowLogin(true)}
-                className="px-4 py-2 border border-white/15 hover:border-amber-500/50 text-neutral-300 hover:text-amber-400 rounded-xl text-sm transition duration-300 cursor-pointer"
+                className="px-3 sm:px-4 py-1.5 sm:py-2 border border-white/15 hover:border-amber-500/50 text-neutral-300 hover:text-amber-400 rounded-xl text-xs sm:text-sm transition duration-300 cursor-pointer"
               >
                 Login
               </button>
               <button
                 onClick={() => setShowRegister(true)}
-                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 hover:from-amber-400 hover:to-amber-500 font-semibold rounded-xl text-sm transition duration-300 cursor-pointer"
+                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 hover:from-amber-400 hover:to-amber-500 font-semibold rounded-xl text-xs sm:text-sm transition duration-300 cursor-pointer"
               >
                 Register
               </button>
@@ -104,7 +104,7 @@ export default function Header({
             <div className="relative">
               <button
                 onClick={() => setShowProfileMenu((prev) => !prev)}
-                className="px-4 py-2 bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded-xl text-sm font-semibold flex items-center gap-1 cursor-pointer hover:bg-amber-500/20 transition"
+                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1 cursor-pointer hover:bg-amber-500/20 transition"
               >
                 👤 {user.name}
               </button>

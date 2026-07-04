@@ -4,11 +4,7 @@ import Stats from "../components/Stats";
 import SearchFilter from "../components/SearchFilter";
 import AdminPanel from "../components/AdminPanel";
 
-<<<<<<< HEAD
-const API_URL = import.meta.env.VITE_API_URL || "https://codeandsweet.onrender.com";
 
-=======
->>>>>>> d9f7208 (Redesign the webpage)
 export default function Home({
   sweets = [],
   fetchSweets,
@@ -52,24 +48,6 @@ export default function Home({
         <AdminPanel fetchSweets={fetchSweets} sweets={sweets} />
       )}
 
-<<<<<<< HEAD
-      <section className="px-6 pb-20 flex-grow">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {visibleSweets.map(sweet => (
-            <ProductCard
-              key={sweet._id}
-              product={{
-                ...sweet,
-                image: sweet.image 
-              }}
-              quantity={qty[sweet._id] || 0}
-              onIncrease={() => increaseQty(sweet._id)}
-              onDecrease={() => decreaseQty(sweet._id)}
-              onAddToCart={() => addToCart(sweet)}
-            />
-          ))}
-        </div>
-=======
       <section className="max-w-6xl mx-auto px-6 pb-20 flex-grow w-full">
         {visibleSweets.length === 0 ? (
           <div className="text-center py-20 text-neutral-500">
@@ -89,7 +67,6 @@ export default function Home({
             ))}
           </div>
         )}
->>>>>>> d9f7208 (Redesign the webpage)
 
         {category === "all" && !showAll && filteredSweets.length > 6 && (
           <div className="text-center mt-12">
