@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function CheckoutModal({ cart, totalPrice, onClose, onSuccess }) {
   const [address, setAddress] = useState("");
+  const [orderType, setOrderType] = useState("Delivery");
+  const [tableNumber, setTableNumber] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Card");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -19,8 +21,12 @@ export default function CheckoutModal({ cart, totalPrice, onClose, onSuccess }) 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!address.trim()) {
-      setError("Please enter your shipping address");
+    if (orderType === "Delivery" && !address.trim()) {
+      setError("Please enter your delivery address");
+      return;
+    }
+    if (orderType === "Dine-In" && !tableNumber.trim()) {
+      setError("Please enter your table number");
       return;
     }
     setError("");
@@ -41,7 +47,9 @@ export default function CheckoutModal({ cart, totalPrice, onClose, onSuccess }) 
         body: {
           items: mappedItems,
           totalAmount: totalPrice,
-          shippingAddress: address,
+          shippingAddress: orderType === "Delivery" ? address : "Restaurant dine-in",
+          orderType,
+          tableNumber: orderType === "Dine-In" ? tableNumber : "",
           paymentMethod: paymentMethod === "Card" ? `Card (...${cardNumber.slice(-4) || "4242"})` : paymentMethod === "UPI" ? `UPI (${upiId})` : "Cash on Delivery",
         },
       });
@@ -112,19 +120,56 @@ export default function CheckoutModal({ cart, totalPrice, onClose, onSuccess }) 
                   </div>
                 </div>
 
-                {/* Shipping Address */}
+                {/* Order Type */}
+                <div>
+                  <label className="block text-sm font-medium text-neutral-300 mb-2">
+                    Order Type
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {["Delivery", "Dine-In"].map((type) => (
+                      <button
+                        type="button"
+                        key={type}
+                        onClick={() => setOrderType(type)}
+                        className={`py-2 px-3 rounded-xl border text-sm font-medium transition cursor-pointer ${
+                          orderType === type
+                            ? "bg-amber-500/20 border-amber-500 text-amber-300"
+                            : "bg-neutral-900 border-white/5 text-neutral-400 hover:border-white/20"
+                        }`}
+                      >
+                        {type === "Delivery" ? "Delivery" : "Table Service"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Shipping Address / Table Number */}
                 <div>
                   <label className="block text-sm font-medium text-neutral-300 mb-1">
-                    Shipping Address
+                    {orderType === "Delivery" ? "Delivery Address" : "Table Number"}
                   </label>
-                  <textarea
-                    rows="3"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Enter your street address, city, and zip code..."
-                    className="w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-2 text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:border-amber-500 transition resize-none"
-                    required
-                  ></textarea>
+                  {orderType === "Delivery" ? (
+                    <>
+                      <textarea
+                        rows="3"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Street address, city, state, PIN code, India"
+                        className="w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-2 text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:border-amber-500 transition resize-none"
+                        required
+                      ></textarea>
+                      <p className="text-xs text-neutral-500 mt-1">Delivery is available inside India only.</p>
+                    </>
+                  ) : (
+                    <input
+                      type="text"
+                      value={tableNumber}
+                      onChange={(e) => setTableNumber(e.target.value)}
+                      placeholder="Example: Table 7"
+                      className="w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-2 text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:border-amber-500 transition"
+                      required
+                    />
+                  )}
                 </div>
 
                 {/* Payment Method */}
@@ -226,7 +271,7 @@ export default function CheckoutModal({ cart, totalPrice, onClose, onSuccess }) 
               </div>
               <h3 className="text-3xl font-serif font-bold text-amber-200">Order Complete!</h3>
               <p className="text-neutral-400 max-w-sm">
-                Your luxury sweet treats are being prepared by our top engineers. Preparing to ship shortly!
+                Your order is confirmed. Receipt and tracking details have been sent to your email.
               </p>
               <div className="text-xs text-neutral-600 animate-pulse pt-2">
                 Redirecting to order dashboard...

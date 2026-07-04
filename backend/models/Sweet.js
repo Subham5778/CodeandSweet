@@ -24,6 +24,10 @@ const sweetSchema = new mongoose.Schema(
     image: {
       type: String,
       default: ""
+    },
+    available: {
+      type: Boolean,
+      default: true
     }
   },
   { timestamps: true }

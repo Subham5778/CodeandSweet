@@ -27,7 +27,7 @@ export default function OrderHistory({ onBackToShop }) {
       <div className="flex justify-between items-center mb-8 pb-4 border-b border-white/10">
         <div>
           <h2 className="text-3xl font-bold font-serif text-amber-100">Order Ledger</h2>
-          <p className="text-sm text-neutral-400">Your historical purchases at Cacao & Confection</p>
+          <p className="text-sm text-neutral-400">Your receipts, table orders, and delivery tracking</p>
         </div>
         <button
           onClick={onBackToShop}
@@ -73,7 +73,7 @@ export default function OrderHistory({ onBackToShop }) {
               {/* Receipt Header */}
               <div className="flex flex-col md:flex-row justify-between mb-4 pb-4 border-b border-white/5 text-sm">
                 <div>
-                  <span className="text-neutral-500">Order Reference: </span>
+                    <span className="text-neutral-500">Order Reference: </span>
                   <span className="text-amber-300 font-mono">{order._id}</span>
                 </div>
                 <div>
@@ -123,7 +123,16 @@ export default function OrderHistory({ onBackToShop }) {
               <div className="border-t border-white/5 pt-4 flex flex-col md:flex-row md:justify-between text-sm space-y-2 md:space-y-0">
                 <div className="text-xs text-neutral-500 space-y-1">
                   <p>
-                    <span className="font-medium text-neutral-400">Ship To:</span> {order.shippingAddress}
+                    <span className="font-medium text-neutral-400">Order Type:</span> {order.orderType || "Delivery"}
+                  </p>
+                  <p>
+                    <span className="font-medium text-neutral-400">Tracking:</span> {order.trackingStatus || order.status}
+                  </p>
+                  <p>
+                    <span className="font-medium text-neutral-400">
+                      {order.orderType === "Dine-In" ? "Table:" : "Ship To:"}
+                    </span>{" "}
+                    {order.orderType === "Dine-In" ? order.tableNumber || "N/A" : order.shippingAddress}
                   </p>
                   <p>
                     <span className="font-medium text-neutral-400">Payment:</span> {order.paymentMethod}

@@ -58,7 +58,7 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
         body: formData,
       });
 
-      alert("Sweet added successfully!");
+      alert("Product added successfully!");
       setNewSweet({ name: "", category: "sweet", price: "", stock: "", image: null });
       fetchSweets();
     } catch (err) {
@@ -80,6 +80,8 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
       formData.append("price", Number(editingSweet.price));
       formData.append("stock", Number(editingSweet.stock));
 
+      formData.append("available", editingSweet.available !== false);
+
       if (editingSweet.image instanceof File) {
         formData.append("image", editingSweet.image);
       }
@@ -89,7 +91,7 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
         body: formData,
       });
 
-      alert("Sweet updated successfully!");
+      alert("Product updated successfully!");
       setEditingSweet(null);
       fetchSweets();
     } catch (err) {
@@ -99,7 +101,7 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
 
   /* ------------------ DELETE ------------------ */
   const handleDeleteSweet = async (sweetId) => {
-    if (!window.confirm("Delete this sweet?")) return;
+    if (!window.confirm("Delete this product?")) return;
 
     try {
       await apiRequest(`/sweets/${sweetId}`, { method: "DELETE" });
@@ -149,7 +151,7 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
             className="h-12 w-12 object-cover rounded-xl border border-white/10"
           />
         );
-      } catch (e) {
+      } catch {
         return null;
       }
     }
@@ -234,6 +236,9 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
                 <option value="sweet">Sweet</option>
                 <option value="cake">Cake</option>
                 <option value="chocolate">Chocolate</option>
+                <option value="chinese">Chinese Food</option>
+                <option value="bihari">Bihari Food</option>
+                <option value="rajasthani">Rajasthani Food</option>
               </select>
             </div>
             <div className="space-y-2">
@@ -257,7 +262,7 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
               />
             </div>
             <div className="md:col-span-3 space-y-2">
-              <label className="block text-xs font-medium text-neutral-400 uppercase tracking-wider">Recipe Photo</label>
+              <label className="block text-xs font-medium text-neutral-400 uppercase tracking-wider">Product Photo</label>
               <div className="flex items-center gap-3">
                 <input
                   type="file"
@@ -272,7 +277,7 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
                 onClick={handleAddSweet}
                 className="w-full py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 font-bold rounded-xl shadow transition duration-300 cursor-pointer"
               >
-                Add Sweet to Catalog
+                Add Product to Catalog
               </button>
             </div>
           </div>
@@ -301,9 +306,33 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
                       <span className={sweet.stock <= 3 ? "text-amber-500 font-bold" : "text-neutral-300"}>
                         {sweet.stock}
                       </span>
+                      <div className="text-[10px] mt-0.5">
+                        {sweet.available !== false ? (
+                          <span className="text-emerald-400">Available</span>
+                        ) : (
+                          <span className="text-red-400">Unavailable</span>
+                        )}
+                      </div>
                     </td>
                     <td className="py-3 text-right">
-                      <div className="flex justify-end gap-1.5">
+                      <div className="flex justify-end gap-1.5 flex-wrap">
+                        <button
+                          onClick={async () => {
+                            try {
+                              await apiRequest(`/sweets/${sweet._id}/toggle-availability`, { method: "POST" });
+                              fetchSweets();
+                            } catch (e) {
+                              alert(e.message || "Failed to toggle availability");
+                            }
+                          }}
+                          className={`px-2 py-1 text-xs rounded-lg transition cursor-pointer ${
+                            sweet.available !== false
+                              ? "bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20"
+                              : "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
+                          }`}
+                        >
+                          {sweet.available !== false ? "Disable" : "Enable"}
+                        </button>
                         <button
                           onClick={() => setEditingSweet(sweet)}
                           className="px-2 py-1 text-xs bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-lg hover:bg-amber-500/20 transition cursor-pointer"
@@ -334,7 +363,7 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
           {editingSweet && (
             <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50 p-4">
               <div className="glass p-6 rounded-2xl w-full max-w-md shadow-2xl relative space-y-4">
-                <h3 className="text-xl font-serif font-bold text-amber-100">Modify Sweet</h3>
+                <h3 className="text-xl font-serif font-bold text-amber-100">Modify Product</h3>
                 <div className="space-y-3">
                   <input
                     value={editingSweet.name}
@@ -349,6 +378,9 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
                     <option value="sweet">Sweet</option>
                     <option value="cake">Cake</option>
                     <option value="chocolate">Chocolate</option>
+                    <option value="chinese">Chinese Food</option>
+                    <option value="bihari">Bihari Food</option>
+                    <option value="rajasthani">Rajasthani Food</option>
                   </select>
                   <input
                     type="number"
@@ -362,6 +394,16 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
                     onChange={(e) => setEditingSweet({ ...editingSweet, stock: e.target.value })}
                     className="w-full bg-neutral-950 border border-white/10 rounded-xl px-3 py-2 text-sm text-neutral-100"
                   />
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="edit-available"
+                      checked={editingSweet.available !== false}
+                      onChange={(e) => setEditingSweet({ ...editingSweet, available: e.target.checked })}
+                      className="rounded border-white/10 bg-neutral-950 text-amber-500 focus:ring-0"
+                    />
+                    <label htmlFor="edit-available" className="text-sm text-neutral-300">Available for Order</label>
+                  </div>
                   <div className="flex items-center gap-3">
                     <input
                       type="file"
@@ -403,7 +445,7 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
               <p className="text-3xl font-serif font-bold text-neutral-200">{totalOrders}</p>
             </div>
             <div className="bg-neutral-900/50 border border-white/5 rounded-2xl p-5 text-center">
-              <p className="text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-1">Best-Selling Flavor</p>
+              <p className="text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-1">Best-Selling Product</p>
               <p className="text-lg font-serif font-bold text-emerald-400 truncate mt-1">{getBestSeller()}</p>
             </div>
           </div>
@@ -418,10 +460,12 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
                   <tr className="border-b border-white/10 text-neutral-400 text-xs uppercase tracking-wider">
                     <th className="pb-3 pr-4">Order ID / Date</th>
                     <th className="pb-3 pr-4">Customer</th>
-                    <th className="pb-3 pr-4">Sweets Ordered</th>
+                    <th className="pb-3 pr-4">Type</th>
+                    <th className="pb-3 pr-4">Items Ordered</th>
                     <th className="pb-3 pr-4">Total Price</th>
                     <th className="pb-3 pr-4">Payment</th>
-                    <th className="pb-3 text-right">Destination</th>
+                    <th className="pb-3 pr-4">Tracking</th>
+                    <th className="pb-3 text-right">Address / Table</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-neutral-300">
@@ -435,7 +479,12 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
                       </td>
                       <td className="py-3 pr-4">
                         <div className="font-medium text-neutral-200">{t.userId?.name || "Unknown"}</div>
-                        <div className="text-[10px] text-neutral-500">{t.userId?.email}</div>
+                        <div className="text-[10px] text-neutral-500">{t.userId?.email || t.customerEmail}</div>
+                      </td>
+                      <td className="py-3 pr-4">
+                        <span className={`px-2 py-0.5 text-[10px] rounded font-bold ${t.orderType === "Dine-In" ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-blue-500/10 text-blue-400 border border-blue-500/20"}`}>
+                          {t.orderType || "Delivery"}
+                        </span>
                       </td>
                       <td className="py-3 pr-4 space-y-0.5">
                         {t.items.map((item, itemIdx) => (
@@ -446,15 +495,16 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
                       </td>
                       <td className="py-3 pr-4 font-bold text-neutral-200">₹{t.totalAmount}</td>
                       <td className="py-3 pr-4 text-xs text-neutral-400">{t.paymentMethod}</td>
+                      <td className="py-3 pr-4 text-xs text-neutral-400">{t.trackingStatus || t.status}</td>
                       <td className="py-3 text-right text-xs text-neutral-400 max-w-xs truncate">
-                        {t.shippingAddress}
+                        {t.orderType === "Dine-In" ? `Table: ${t.tableNumber || "N/A"}` : t.shippingAddress}
                       </td>
                     </tr>
                   ))}
                   {transactions.length === 0 && (
                     <tr>
-                      <td colSpan="6" className="text-center py-10 text-neutral-500">
-                        No transactions registered in system yet.
+                      <td colSpan="8" className="text-center py-10 text-neutral-500">
+                        No sales registered in system yet.
                       </td>
                     </tr>
                   )}

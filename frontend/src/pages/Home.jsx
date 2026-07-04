@@ -15,16 +15,26 @@ export default function Home({
   addToCart,
   search,
   setSearch,
+  menuSection,
+  setMenuSection,
   category,
   setCategory,
   showAll,
   setShowAll,
 }) {
+  const foodCategories = ["chinese", "bihari", "rajasthani"];
+  const sweetCategories = ["sweet", "cake", "chocolate"];
+
   // Filter sweets based on search and category
   const filteredSweets = sweets.filter((sweet) => {
     const matchName = sweet.name.toLowerCase().includes(search.toLowerCase());
+    const matchAvailability = user?.role === "admin" || sweet.available !== false;
+    const matchSection =
+      menuSection === "all" ||
+      (menuSection === "food" && foodCategories.includes(sweet.category)) ||
+      (menuSection === "sweets" && sweetCategories.includes(sweet.category));
     const matchCategory = category === "all" || sweet.category === category;
-    return matchName && matchCategory;
+    return matchName && matchAvailability && matchSection && matchCategory;
   });
 
   // Limit visible sweets
@@ -39,6 +49,8 @@ export default function Home({
       <SearchFilter
         search={search}
         setSearch={setSearch}
+        menuSection={menuSection}
+        setMenuSection={setMenuSection}
         category={category}
         setCategory={setCategory}
         setShowAll={setShowAll}

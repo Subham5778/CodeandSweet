@@ -7,6 +7,7 @@ const transactionSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    customerEmail: { type: String, default: "" },
     items: [
       {
         productId: {
@@ -23,7 +24,10 @@ const transactionSchema = new mongoose.Schema(
     totalAmount: { type: Number, required: true },
     shippingAddress: { type: String, required: true },
     paymentMethod: { type: String, required: true }, // e.g. "Card", "UPI", "Cash on Delivery"
-    status: { type: String, default: "Completed" },
+    status: { type: String, default: "Order Placed" },
+    trackingStatus: { type: String, default: "Preparing" },
+    orderType: { type: String, enum: ["Delivery", "Dine-In"], default: "Delivery" },
+    tableNumber: { type: String, default: "" },
   },
   { timestamps: true }
 );

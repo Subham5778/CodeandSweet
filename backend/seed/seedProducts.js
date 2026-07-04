@@ -55,6 +55,33 @@ const products = [
     img: "kaju.png",
     stock: 45,
   },
+  {
+    name: "Veg Hakka Noodles",
+    brand: "Code & Sweet Kitchen",
+    desc: "Restaurant-style Chinese noodles with fresh vegetables.",
+    price: 180,
+    category: "chinese",
+    img: "hakka-noodles.png",
+    stock: 25,
+  },
+  {
+    name: "Litti Chokha",
+    brand: "Code & Sweet Kitchen",
+    desc: "Classic Bihari litti served with smoky chokha.",
+    price: 160,
+    category: "bihari",
+    img: "litti-chokha.png",
+    stock: 30,
+  },
+  {
+    name: "Dal Baati Churma",
+    brand: "Code & Sweet Kitchen",
+    desc: "Rajasthani dal baati with sweet churma.",
+    price: 240,
+    category: "rajasthani",
+    img: "dal-baati.png",
+    stock: 20,
+  },
 ];
 
 // Seeder function

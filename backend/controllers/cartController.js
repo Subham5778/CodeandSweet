@@ -32,6 +32,15 @@ export const addToCart = async (req, res) => {
     if (!sweet) {
       return res.status(404).json({ message: "Product not found" });
     }
+    if (sweet.available === false) {
+      return res.status(400).json({ message: "This product is currently unavailable" });
+    }
+    if (!quantity || quantity <= 0) {
+      return res.status(400).json({ message: "Quantity must be at least 1" });
+    }
+    if (sweet.stock < quantity) {
+      return res.status(400).json({ message: `Only ${sweet.stock} item(s) available in stock` });
+    }
 
     let cart = await Cart.findOne({ userId });
 
@@ -54,6 +63,9 @@ export const addToCart = async (req, res) => {
       );
 
       if (itemIndex > -1) {
+        if (cart.items[itemIndex].quantity + quantity > sweet.stock) {
+          return res.status(400).json({ message: `Only ${sweet.stock} item(s) available in stock` });
+        }
         cart.items[itemIndex].quantity += quantity;
       } else {
         cart.items.push({
@@ -90,6 +102,19 @@ export const updateCartItem = async (req, res) => {
     const item = cart.items.id(itemId);
     if (!item) {
       return res.status(404).json({ message: "Item not found" });
+    }
+    const sweet = await Sweet.findById(item.productId);
+    if (!sweet) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    if (sweet.available === false) {
+      return res.status(400).json({ message: "This product is currently unavailable" });
+    }
+    if (!quantity || quantity <= 0) {
+      return res.status(400).json({ message: "Quantity must be at least 1" });
+    }
+    if (sweet.stock < quantity) {
+      return res.status(400).json({ message: `Only ${sweet.stock} item(s) available in stock` });
     }
 
     item.quantity = quantity;

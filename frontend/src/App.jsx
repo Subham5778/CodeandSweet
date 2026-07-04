@@ -17,6 +17,7 @@ export default function App() {
 
   // Search & filter
   const [search, setSearch] = useState("");
+  const [menuSection, setMenuSection] = useState("all");
   const [category, setCategory] = useState("all");
   const [showAll, setShowAll] = useState(false);
 
@@ -198,6 +199,7 @@ export default function App() {
 
   const handleCheckoutSuccess = () => {
     setCart([]);
+    fetchSweets();
     setActiveView("orders");
   };
 
@@ -293,6 +295,8 @@ export default function App() {
             setSearch={setSearch}
             category={category}
             setCategory={setCategory}
+            menuSection={menuSection}
+            setMenuSection={setMenuSection}
             qty={qty}
             increaseQty={increaseQty}
             decreaseQty={decreaseQty}

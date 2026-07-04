@@ -9,7 +9,9 @@ export default function ProductCard({
 }) {
   if (!product) return null;
 
+  const isUnavailable = product.available === false;
   const isOutOfStock = product.stock <= 0;
+  const cannotOrder = isUnavailable || isOutOfStock;
 
   // Resolve image source dynamically
   const getProductImage = () => {
@@ -27,7 +29,11 @@ export default function ProductCard({
     <div className="glass-light rounded-2xl p-5 flex flex-col items-center border border-white/5 hover:border-amber-500/30 transition-all duration-300 shadow-lg group hover:shadow-amber-900/5 relative overflow-hidden">
       {/* Stock status indicator badge */}
       <div className="absolute top-3 right-3 z-10">
-        {isOutOfStock ? (
+        {isUnavailable ? (
+          <span className="bg-red-500/10 text-red-300 text-[10px] uppercase font-bold px-2 py-0.5 rounded-md tracking-wider">
+            Unavailable
+          </span>
+        ) : isOutOfStock ? (
           <span className="bg-neutral-800 text-neutral-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded-md tracking-wider">
             Out of Stock
           </span>
@@ -72,7 +78,7 @@ export default function ProductCard({
           <div className="flex items-center justify-center space-x-3 bg-neutral-950/60 rounded-xl px-2 py-1.5 border border-white/5">
             <button
               onClick={onDecrease}
-              disabled={isOutOfStock || quantity <= 0}
+              disabled={cannotOrder || quantity <= 0}
               className="w-8 h-8 rounded-lg flex items-center justify-center border border-white/5 text-neutral-400 hover:text-amber-400 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/5 cursor-pointer transition"
             >
               −
@@ -82,7 +88,7 @@ export default function ProductCard({
             </span>
             <button
               onClick={onIncrease}
-              disabled={isOutOfStock || quantity >= product.stock}
+              disabled={cannotOrder || quantity >= product.stock}
               className="w-8 h-8 rounded-lg flex items-center justify-center border border-white/5 text-neutral-400 hover:text-amber-400 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/5 cursor-pointer transition"
             >
               +
@@ -92,10 +98,10 @@ export default function ProductCard({
           {/* Add to Cart Button */}
           <button
             onClick={onAddToCart}
-            disabled={isOutOfStock}
+            disabled={cannotOrder}
             className="w-full py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 font-bold rounded-xl transition duration-300 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed shadow-md"
           >
-            {isOutOfStock ? "Sold Out" : "Add to Cart"}
+            {isUnavailable ? "Unavailable" : isOutOfStock ? "Sold Out" : "Add to Cart"}
           </button>
         </div>
       </div>

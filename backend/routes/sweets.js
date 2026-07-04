@@ -27,9 +27,9 @@ router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-      const { name, category, price, stock } = req.body;
+      const { name, category, price, stock, available } = req.body;
 
-      if (!name || !category || !price || !stock) {
+      if (!name || !category || price === undefined || stock === undefined) {
         return res.status(400).json({ message: "All fields are required" });
       }
 
@@ -38,7 +38,8 @@ router.post(
         category,
         price: Number(price),
         stock: Number(stock),
-        image: req.file ? req.file.path : ""
+        image: req.file ? req.file.path : "",
+        available: available !== undefined ? available === "true" || available === true : true
       });
 
       await sweet.save();
@@ -64,12 +65,15 @@ router.put(
         return res.status(404).json({ message: "Sweet not found" });
       }
 
-      const { name, category, price, stock } = req.body;
+      const { name, category, price, stock, available } = req.body;
 
       if (name) sweet.name = name;
       if (category) sweet.category = category;
-      if (price) sweet.price = Number(price);
-      if (stock) sweet.stock = Number(stock);
+      if (price !== undefined) sweet.price = Number(price);
+      if (stock !== undefined) sweet.stock = Number(stock);
+      if (available !== undefined) {
+        sweet.available = available === "true" || available === true;
+      }
 
       if (req.file) {
         sweet.image = req.file.path;
@@ -124,23 +128,15 @@ router.post("/:id/restock", authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// Purchase sweet
-router.post("/:id/purchase", authenticateToken, async (req, res) => {
+// Toggle Availability sweet
+router.post("/:id/toggle-availability", authenticateToken, isAdmin, async (req, res) => {
   try {
     const sweet = await Sweet.findById(req.params.id);
-
     if (!sweet) {
       return res.status(404).json({ message: "Sweet not found" });
     }
-
-    if (sweet.stock <= 0) {
-      return res.status(400).json({ message: "Out of stock" });
-    }
-
-    sweet.stock -= 1;
-
+    sweet.available = !sweet.available;
     await sweet.save();
-
     res.json(sweet);
   } catch (err) {
     res.status(500).json({ message: err.message });
