@@ -35,6 +35,16 @@ export default function App() {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
 
+  const scrollToTop = () => {
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+  };
+
+  useEffect(() => {
+    scrollToTop();
+  }, [activeView]);
+
   /* ------------------ VERIFY TOKEN & USER ON LOAD ------------------ */
   useEffect(() => {
     const verifyUser = async () => {
@@ -201,6 +211,7 @@ export default function App() {
     setCart([]);
     fetchSweets();
     setActiveView("orders");
+    scrollToTop();
   };
 
   /* ------------------ USER AUTH ------------------ */
@@ -213,6 +224,8 @@ export default function App() {
       localStorage.setItem("token", data.token);
       setUser(data.user);
       setShowLogin(false);
+      setActiveView("home");
+      scrollToTop();
       // Clear forms
       setLoginEmail("");
       setLoginPassword("");
@@ -240,6 +253,8 @@ export default function App() {
       localStorage.setItem("token", loginRes.token);
       setUser(loginRes.user);
       setShowRegister(false);
+      setActiveView("home");
+      scrollToTop();
       // Clear forms
       setRegisterName("");
       setRegisterEmail("");
@@ -254,6 +269,7 @@ export default function App() {
     setUser(null);
     setCart([]);
     setActiveView("home");
+    scrollToTop();
   };
 
   return (
@@ -315,6 +331,7 @@ export default function App() {
       {showCheckout && (
         <CheckoutModal
           cart={cart}
+          user={user}
           totalPrice={cart.reduce((sum, item) => sum + item.price * item.quantity, 0)}
           onClose={() => setShowCheckout(false)}
           onSuccess={handleCheckoutSuccess}

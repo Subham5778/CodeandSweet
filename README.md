@@ -1,119 +1,173 @@
-# 🍰 Cacao & Confection (CodeandSweet)
+# CodeandSweet - Cacao & Confection
 
-Cacao & Confection is a premium, full-stack e-commerce web application built using the MERN stack. Designed with high-end dark-mode aesthetics, glassmorphism, dynamic typing effects, and sleek animations, the application delivers a bespoke digital storefront experience for gourmet sweet connoisseurs.
+CodeandSweet is a full-stack MERN web application for a sweet shop and restaurant ordering experience. Customers can browse sweets, cakes, chocolates, and food items, add products to cart, place delivery or dine-in table orders, track their order details, and review items after purchase.
 
-It enables users to browse catalog items, search & filter treats by categories, manage local/database cart inventories, place order ledgers, and view their purchase history. It also features a fully-equipped Admin Dashboard for managing products and analyzing sales metrics.
+The admin dashboard supports product management, stock control, availability toggles, and sales/order tracking.
 
 ---
 
-## 🚀 Tech Stack
+## Live Links
+
+- Frontend: [https://codeand-sweet.vercel.app/](https://codeand-sweet.vercel.app/)
+- Backend API: [https://codeandsweet.onrender.com/api](https://codeandsweet.onrender.com/api)
+
+---
+
+## Tech Stack
 
 ### Frontend
-- **Framework & Build Tool:** React.js (Vite)
-- **Styling:** Tailwind CSS & Custom CSS Utilities
-- **Animations:** Framer Motion
-- **Architecture:** React Hooks & API Request Layer
+
+- React.js with Vite
+- Tailwind CSS and custom CSS
+- Framer Motion
+- Central API request helper
 
 ### Backend
-- **Framework:** Node.js & Express.js (ES Modules)
-- **Database:** MongoDB & Mongoose
-- **Authentication:** JSON Web Tokens (JWT) & bcrypt.js (Password Hashing)
-- **Storage:** Local Storage (`/uploads`) & Cloudinary Integration
+
+- Node.js and Express.js
+- MongoDB and Mongoose
+- JWT authentication
+- bcrypt.js password hashing
+- Multer upload middleware
+- Local uploads and Cloudinary-ready config
 
 ---
 
-## 🌐 Live Links
-- **Frontend URL:** [https://codeand-sweet.vercel.app/](https://codeand-sweet.vercel.app/)
-- **Backend API:** [https://codeandsweet.onrender.com/api](https://codeandsweet.onrender.com/api)
+## Features
+
+### Customer Features
+
+- Browse sweets, cakes, chocolates, and restaurant food.
+- Food menu sections include Chinese, Bihari, and Rajasthani categories.
+- Search and filter products by menu section and category.
+- Add items to cart and checkout securely.
+- Choose delivery or restaurant table service.
+- Delivery is limited to India.
+- Dine-in orders require a table number.
+- Receipt email is shown from the logged-in user account.
+- Order history shows items, payment method, address or table number, and tracking status.
+- Customers can submit or update reviews only for products they purchased.
+
+### Admin Features
+
+- Add, edit, delete, and restock products.
+- Mark products available or unavailable for ordering.
+- Stock decreases automatically after checkout.
+- View sales, total transactions, revenue, best-selling product, customer email, order type, and tracking details.
+- Manage sweets and food products from the same catalog panel.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 CodeandSweet/
-├── backend/
-│   ├── app.js             # Express application initialization & middleware
-│   ├── server.js          # DB Connection & Node Server startup
-│   ├── routes/            # Routes (Auth, Sweets, Cart, Transactions)
-│   ├── models/            # Schema Models (User, Sweet, Cart, Transaction)
-│   └── package.json
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/    # Reusable components (Header, Hero, ProductCard, Stats, AdminPanel...)
-│   │   ├── pages/         # Page templates (Home)
-│   │   ├── api/           # Centralized API requests
-│   │   ├── assets/        # Media & Logo assets
-│   │   ├── App.jsx        # Root application container
-│   │   └── main.jsx       # Entry point
-│   ├── index.html
-│   └── package.json
-│
-└── README.md
+|-- backend/
+|   |-- app.js
+|   |-- server.js
+|   |-- config/
+|   |-- controllers/
+|   |-- middleware/
+|   |-- models/
+|   |-- routes/
+|   |-- seed/
+|   |-- uploads/
+|   `-- package.json
+|
+|-- frontend/
+|   |-- src/
+|   |   |-- api/
+|   |   |-- assets/
+|   |   |-- components/
+|   |   |-- pages/
+|   |   |-- App.jsx
+|   |   `-- main.jsx
+|   |-- index.html
+|   `-- package.json
+|
+|-- Admin Panel.png
+|-- Cart.png
+|-- Homepage.png
+|-- Register.png
+`-- README.md
 ```
 
 ---
 
-## ✨ Features
+## Installation and Setup
 
-### User Experience
-- **Premium Interface:** High-end, responsive dark mode layout with custom scrollbars, gold gradients, hover effects, and typing micro-animations.
-- **Dynamic Catalog:** Fluid search and category pills matching confections instantly.
-- **Cart Lifecycle:** Fully persistent guest cart locally or logged-in cart synchronized to MongoDB.
-- **Order Tracking:** Detailed transaction checkouts and order history ledger.
-- **Responsive Layout:** Optimized from the ground up for phone, tablet, and laptop screens.
+### 1. Clone the Repository
 
-### Admin Dashboard
-- **Product Management:** Interactive CRUD module to add new sweets, modify details, upload recipe photos, or restock item inventories.
-- **Sales Intelligence:** Live KPI summary cards monitoring gross revenue, total transaction counts, and best-selling flavors.
-- **Order Ledger:** Detailed table tracking customer metadata, order items, and shipping addresses.
-
----
-
-## 🛠 Installation & Setup
-
-### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/Subham5778/CodeandSweet.git
 cd CodeandSweet
 ```
 
-### 2️⃣ Backend Setup
+### 2. Backend Setup
+
 ```bash
 cd backend
 npm install
 npm run dev
 ```
-*Note: Ensure you configure your `.env` variables containing your `MONGO_URL`, `JWT_SECRET`, and port configurations.*
 
-### 3️⃣ Frontend Setup
+Create a `.env` file in `backend/` with:
+
+```env
+MONGO_URL=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5000
+```
+
+### 3. Frontend Setup
+
 ```bash
 cd ../frontend
 npm install
 npm run dev
 ```
 
+Optional frontend environment variable:
+
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-Here is a preview of the application interfaces:
+Update these image files when you refresh the project screenshots. The README already points to the current filenames.
 
-### Homepage Storefront
+### Homepage and Menu
+
 ![Homepage](./Homepage.png)
 
-### Cart Inventory & Checkout
+### Cart and Checkout
+
 ![Cart](./Cart.png)
 
-### User Profile Management
+### Login and Register
+
 ![Register](./Register.png)
 
-### Admin Sales & Catalog Panel
+### Admin Dashboard
+
 ![Admin Panel](./Admin%20Panel.png)
 
 ---
 
-## 🧑‍💻 Author
+## Main API Areas
+
+- `/api/auth` - register, login, current user
+- `/api/sweets` - product catalog and admin product actions
+- `/api/cart` - logged-in cart
+- `/api/transactions` - checkout, order history, admin sales
+- `/api/reviews` - purchased product reviews
+
+---
+
+## Author
+
 **Subham Kumar**  
-*B.Tech CSE | Full Stack Developer*
+B.Tech CSE | Full Stack Developer

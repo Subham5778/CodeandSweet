@@ -2,7 +2,7 @@ import { useState } from "react";
 import { apiRequest } from "../api/api";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function CheckoutModal({ cart, totalPrice, onClose, onSuccess }) {
+export default function CheckoutModal({ cart, user, totalPrice, onClose, onSuccess }) {
   const [address, setAddress] = useState("");
   const [orderType, setOrderType] = useState("Delivery");
   const [tableNumber, setTableNumber] = useState("");
@@ -177,6 +177,11 @@ export default function CheckoutModal({ cart, totalPrice, onClose, onSuccess }) 
                   <label className="block text-sm font-medium text-neutral-300 mb-2">
                     Payment Method
                   </label>
+                  <div className="mb-3 rounded-xl border border-white/5 bg-neutral-900/60 px-3 py-2">
+                    <p className="text-xs uppercase tracking-wider text-neutral-500">Receipt Email</p>
+                    <p className="text-sm font-medium text-neutral-200 truncate">{user?.email || "Login email"}</p>
+                    <p className="text-xs text-neutral-500 mt-1">Your Gmail password is not required for payment.</p>
+                  </div>
                   <div className="grid grid-cols-3 gap-2">
                     {["Card", "UPI", "Cash"].map((method) => (
                       <button
