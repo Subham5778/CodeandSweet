@@ -2,6 +2,7 @@ import React from "react";
 
 export default function ProductCard({
   product,
+  disabledReason = "",
   quantity,
   onIncrease,
   onDecrease,
@@ -11,7 +12,7 @@ export default function ProductCard({
 
   const isUnavailable = product.available === false;
   const isOutOfStock = product.stock <= 0;
-  const cannotOrder = isUnavailable || isOutOfStock;
+  const cannotOrder = isUnavailable || isOutOfStock || Boolean(disabledReason);
 
   // Resolve image source dynamically
   const getProductImage = () => {

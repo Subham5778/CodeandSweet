@@ -58,3 +58,16 @@ export const getMyReviews = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const getPublicReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .populate("userId", "name")
+      .sort({ createdAt: -1 })
+      .limit(12);
+
+    res.json(reviews);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
