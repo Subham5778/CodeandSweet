@@ -48,7 +48,7 @@ export default function Header({
           <img src={logo} alt="Logo" className="w-10 h-10 sm:w-12 sm:h-12 object-contain hover:scale-105 transition" />
           <div className="text-left">
             <h1 className="text-lg sm:text-xl font-bold gold-text-gradient font-serif tracking-wide leading-none">Cacao & Confection</h1>
-            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-500 font-mono">Bespoke Sweet Engineering</span>
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-500 font-mono">Premium Sweets & Cakes</span>
           </div>
         </div>
 
@@ -66,7 +66,7 @@ export default function Header({
                   : "border-white/5 text-neutral-300"
               }`}
             >
-              📜 Orders
+              My Orders
             </button>
           )}
 
@@ -121,7 +121,7 @@ export default function Header({
                     }}
                     className="w-full text-left px-3 py-2 text-sm text-neutral-300 hover:bg-white/5 hover:text-amber-400 rounded-lg transition mt-1 cursor-pointer"
                   >
-                    View Order Ledger
+                    View My Orders
                   </button>
                   {user.role === "admin" && (
                     <button
@@ -172,7 +172,7 @@ export default function Header({
               className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-neutral-900 border-l border-white/10 shadow-2xl p-6 z-50 flex flex-col"
             >
               <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/5">
-                <h3 className="text-xl font-bold font-serif text-amber-200">Cart Inventory</h3>
+                <h3 className="text-xl font-bold font-serif text-amber-200">Your Cart</h3>
                 <button
                   onClick={() => setShowCart(false)}
                   className="text-neutral-400 hover:text-amber-500 transition text-2xl"
@@ -184,7 +184,7 @@ export default function Header({
               <div className="flex-grow overflow-y-auto space-y-4 pr-2">
                 {!user ? (
                   <div className="text-center py-10">
-                    <p className="text-neutral-400 mb-4 text-sm">Please register or log in to sync your bespoke cart.</p>
+                    <p className="text-neutral-400 mb-4 text-sm">Please register or log in to sync your cart.</p>
                     <button
                       onClick={() => {
                         setShowCart(false);
@@ -287,7 +287,7 @@ export default function Header({
               <div className="space-y-4">
                 <input
                   type="email"
-                  placeholder="Bespoke Email Address"
+                  placeholder="Email Address"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   className="w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:border-amber-500 transition"
@@ -303,7 +303,7 @@ export default function Header({
                   onClick={handleLogin}
                   className="w-full py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 hover:from-amber-400 hover:to-amber-500 font-bold rounded-xl transition duration-300 mt-2 cursor-pointer"
                 >
-                  Indulge
+                  Login
                 </button>
               </div>
 

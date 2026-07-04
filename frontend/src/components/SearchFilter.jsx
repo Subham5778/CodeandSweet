@@ -9,8 +9,8 @@ export default function SearchFilter({ search, setSearch, category, setCategory,
   return (
     <div id="shop-collection" className="max-w-4xl mx-auto px-6 mb-12 space-y-6">
       <div className="text-center">
-        <h3 className="text-3xl font-bold font-serif text-amber-100">Our Boutique Catalog</h3>
-        <p className="text-sm text-neutral-400 mt-1">Select an engineering category or query below</p>
+        <h3 className="text-3xl font-bold font-serif text-amber-100">Our Sweets Menu</h3>
+        <p className="text-sm text-neutral-400 mt-1">Search for sweets or select a category below</p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">

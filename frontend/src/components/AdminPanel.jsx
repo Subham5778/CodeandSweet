@@ -182,8 +182,8 @@ export default function AdminPanel({ sweets = [], fetchSweets }) {
     <div className="max-w-5xl mx-auto px-6 py-8 glass rounded-2xl border border-white/5 shadow-2xl mb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-white/10 gap-4">
         <div>
-          <h2 className="text-2xl font-serif font-bold text-amber-100">Bespoke Administration</h2>
-          <p className="text-xs text-neutral-400">Manage catalog recipes and examine sales intelligence</p>
+          <h2 className="text-2xl font-serif font-bold text-amber-100">Admin Dashboard</h2>
+          <p className="text-xs text-neutral-400">Manage products, update stock and view sales orders</p>
         </div>
 
         {/* Tab Controls */}

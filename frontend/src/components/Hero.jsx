@@ -33,7 +33,7 @@ export default function Hero() {
         </span>
 
         <h2 className="text-5xl md:text-7xl font-bold font-serif tracking-tight leading-tight">
-          Indulge in{" "}
+          Welcome to{" "}
           <span className="block mt-2 font-serif italic gold-text-gradient min-h-[1.2em]">
             {displayText}
             <span className="text-amber-500 animate-pulse">|</span>
@@ -41,9 +41,7 @@ export default function Hero() {
         </h2>
 
         <p className="text-neutral-400 text-lg md:text-xl font-light leading-relaxed">
-          Where culinary artistry meets structural engineering. Every treat is crafted 
-          with hand-selected ingredients, premium cocoa blends, and the meticulous 
-          precision of custom software.
+          Order delicious cakes, chocolates, and premium sweets online. Made fresh daily with the best quality ingredients.
         </p>
 
         <div className="flex justify-center gap-4 pt-4">
