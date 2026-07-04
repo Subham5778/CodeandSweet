@@ -1,11 +1,18 @@
 import express from "express";
-import Cart from "../models/Cart.js";
+import {
+  getCart,
+  addToCart,
+  updateCartItem,
+  removeCartItem,
+} from "../controllers/cartController.js";
+import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:userId", async (req, res) => {
-  const cart = await Cart.findOne({ userId: req.params.userId });
-  res.json(cart);
-});
+// All cart routes require user authentication
+router.get("/", authenticateToken, getCart);
+router.post("/add", authenticateToken, addToCart);
+router.put("/update", authenticateToken, updateCartItem);
+router.delete("/item/:itemId", authenticateToken, removeCartItem);
 
 export default router;

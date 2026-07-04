@@ -38,7 +38,11 @@ router.post(
         category,
         price: Number(price),
         stock: Number(stock),
+<<<<<<< HEAD
         image: req.file?.path 
+=======
+        image: req.file ? req.file.path : ""
+>>>>>>> d9f7208 (Redesign the webpage)
       });
 
       await sweet.save();
